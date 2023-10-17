@@ -1,4 +1,4 @@
-
+//first solution
 class Solution {
     public int[][] merge(int[][] intervals) {
         if (intervals == null || intervals.length == 0) {
@@ -26,5 +26,41 @@ class Solution {
         mergedIntervals.add(currentInterval);
 
         return mergedIntervals.toArray(new int[mergedIntervals.size()][2]);
+    }
+}
+
+
+//Second solution
+// import java.util.*;
+
+class Solution {
+    public int[][] merge(int[][] intervals) {
+        if (intervals.length <= 1) {
+            return intervals;
+        }
+
+        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
+        Stack<int[]> stack = new Stack<>();
+        stack.push(intervals[0]);
+
+        for (int i = 1; i < intervals.length; i++) {
+            int[] currentInterval = intervals[i];
+            int[] previousInterval = stack.peek();
+
+            if (currentInterval[0] <= previousInterval[1]) {
+                // Merge the intervals
+                previousInterval[1] = Math.max(previousInterval[1], currentInterval[1]);
+            } else {
+                // No overlap, push the current interval to the stack
+                stack.push(currentInterval);
+            }
+        }
+
+        int[][] result = new int[stack.size()][2];
+        for (int i = stack.size() - 1; i >= 0; i--) {
+            result[i] = stack.pop();
+        }
+
+        return result;
     }
 }
