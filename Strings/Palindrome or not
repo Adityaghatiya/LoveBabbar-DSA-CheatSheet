@@ -1,0 +1,22 @@
+class Solution {
+    int isPalindrome(String S) {
+        // code here
+        int left=0;
+        int right=S.length()-1;
+        while(left<right)
+        {
+            char l=S.charAt(left);
+            char r=S.charAt(right);
+            
+            if(l==r)
+            {
+                left++;
+                right--;
+            }
+            else{
+                return 0;
+            }
+        }
+        return 1;
+    }
+};
